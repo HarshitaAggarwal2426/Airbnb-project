@@ -1,0 +1,92 @@
+.airbnb-search {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  border-radius: 50px;
+  background-color: #fff;
+  padding: 0.3rem 0.5rem;
+  position: relative;
+}
+
+.airbnb-field {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+  border-right: 1px solid #ddd;
+  position: relative;
+}
+
+.airbnb-field:hover {
+  background-color: #f8f8f8;
+}
+
+.airbnb-field:last-child {
+  border-right: none;
+}
+
+.airbnb-field label {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.airbnb-field span,
+.airbnb-field input {
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.airbnb-field input[type="date"],
+.airbnb-field input[type="number"] {
+  cursor: pointer;
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  width: 200px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  display: none;
+  z-index: 10;
+}
+
+.dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.dropdown ul li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dropdown ul li:hover {
+  background-color: #f7f7f7;
+}
+
+.search-round-btn {
+  background-color: #fe424d;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.search-round-btn:hover {
+  background-color: #e03e44;
+}
