@@ -13,13 +13,15 @@ router
   .get(wrapAsync(listingController.index))
   .post(
     isLoggedIn,
-    validateListing,
+    // validateListing,
     upload.single("listing[image]"),
+    validateListing,
     wrapAsync(listingController.createListing)
   );
 
 //New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
+router.get("/nearby", wrapAsync(listingController.searchNearby));
 
 router
   .route("/:id")
