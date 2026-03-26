@@ -19,9 +19,19 @@ const listingSchema = new Schema({
         "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60",
     },
   },
-  price: Number,
-  location: String,
-  country: String,
+  price: {
+  type: Number,
+  required: true,
+  min: 0,
+  },
+  location: {
+  type: String,
+  required: true,
+  },
+  country: {
+  type: String,
+  required: true,
+  },
   category: String,
   geometry: {
     type: {
@@ -39,10 +49,23 @@ const listingSchema = new Schema({
       ref: "Review",
     },
   ],
+  bookings: [
+  {
+    type: Schema.Types.ObjectId,
+    ref: "Booking",
+  },
+],
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+}, { timestamps: true });
+
+listingSchema.index({ geometry: "2dsphere" });
+listingSchema.index({
+  title: "text",
+  location: "text",
+  category: "text",
 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {
