@@ -107,6 +107,27 @@
   </div>
 </div>
 
+<div style="margin-top: 1rem;">
+  <button onclick="getLocation()" class="btn btn-dark">
+    📍 Search Nearby
+  </button>
+
+  <select id="radius" class="form-select" style="width: 200px; display:inline-block;">
+    <option value="5000">5 km</option>
+    <option value="10000">10 km</option>
+    <option value="50000">50 km</option>
+    <option value="100000">100 km</option>
+    <option value="500000">500 km</option>
+    <option value="1000000" selected>1000 km</option>
+  </select>
+</div>
+
+<% if (typeof noResults !== "undefined" && noResults) { %>
+  <div class="alert alert-warning mt-3">
+    No nearby listings found, showing all instead!!
+  </div>
+<% } %>
+
 <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
   <% for(let listing of allListings) { %>
   <a href="/listings/<%= listing._id %>" class="listing-link">
@@ -129,6 +150,23 @@
   </a>
   <% } %>
 </div>
+
+<script>
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
+
+        let radius = document.getElementById("radius").value;
+
+        window.location.href = `/listings/nearby?lng=${lng}&lat=${lat}&radius=${radius}`;
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+</script>
 
 <script>
   let taxSwitch = document.getElementById("switchCheckDefault");
