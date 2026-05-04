@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const Booking = require("../models/booking");
 
 module.exports.renderNewForm = (req, res) => {
   res.render("listings/new.ejs");
@@ -29,17 +30,46 @@ module.exports.index = async (req, res) => {
   res.render("listings/index.ejs", { allListings: listings, search,noResults, });
 };
 
+// module.exports.showListing = async (req, res) => {
+//   let { id } = req.params;
+//   const listing = await Listing.findById(id)
+//     .populate({ path: "reviews", populate: { path: "author" } })
+//     .populate("owner");
+//   if (!listing) {
+//     req.flash("error", "Listing you requested for does not exist");
+//     return res.redirect("/listings");
+//   }
+//   console.log(listing);
+//   res.render("listings/show.ejs", { listing });
+// };
+
 module.exports.showListing = async (req, res) => {
   let { id } = req.params;
+
   const listing = await Listing.findById(id)
     .populate({ path: "reviews", populate: { path: "author" } })
     .populate("owner");
+
   if (!listing) {
     req.flash("error", "Listing you requested for does not exist");
     return res.redirect("/listings");
   }
-  console.log(listing);
-  res.render("listings/show.ejs", { listing });
+
+  // ✅ FETCH BOOKINGS
+  const bookings = await Booking.find({ listing: id });
+
+  // ✅ CONVERT TO DISABLED DATES
+  let bookedDates = [];
+
+  bookings.forEach((b) => {
+    let current = new Date(b.checkIn);
+    while (current < b.checkOut) {
+      bookedDates.push(new Date(current));
+      current.setDate(current.getDate() + 1);
+    }
+  });
+
+  res.render("listings/show.ejs", { listing, bookedDates });
 };
 
 module.exports.createListing = async (req, res, next) => {

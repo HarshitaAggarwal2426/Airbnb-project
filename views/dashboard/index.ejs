@@ -1,0 +1,94 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-4">
+
+  <h2 class="mb-4">Your Bookings</h2>
+
+  <% if(userBookings.length === 0) { %>
+    <p>No bookings yet.</p>
+  <% } %>
+
+  <div class="row">
+    <% userBookings.forEach(b => { %>
+        <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm rounded-3">
+
+            <!-- IMAGE -->
+            <img 
+            src="<%= b.listing.image.url %>" 
+            class="card-img-top mb-2"
+            >
+
+            <!-- BODY -->
+            <div class="card-body d-flex flex-column p-4">
+
+            <div class="mb-4">
+                <h5 class="card-title mb-2"><%= b.listing.title %></h5>
+                <p class="card-text text-muted mb-3">
+                <%= b.checkIn.toDateString() %> → <%= b.checkOut.toDateString() %>
+                </p>
+            </div>
+
+            <div class="mt-auto pt-2">
+                <% if(b.checkIn > new Date()) { %>
+                <form action="/dashboard/booking/<%= b._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger btn-sm w-100">Cancel</button>
+                </form>
+                <% } else { %>
+                <p class="text-muted">Completed</p>
+                <% } %>
+            </div>
+
+            </div>
+        </div>
+        </div>     
+        <% }) %>
+  </div>
+
+  <hr>
+
+  <% if(isOwner) { %>
+  <h2 class="mb-4 mt-5">Bookings on Your Listings</h2>
+
+  <% if(hostBookings.length === 0) { %>
+    <p>No bookings on your listings.</p>
+  <% } %>
+
+  <div class="row">
+    <% hostBookings.forEach(b => { %>
+        <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm rounded-3">
+
+            <!-- IMAGE -->
+            <img 
+            src="<%= b.listing.image.url %>" 
+            class="card-img-top mb-2"
+            >
+
+            <!-- BODY -->
+            <div class="card-body d-flex flex-column p-4">
+
+            <div class="mb-4">
+                <h5 class="card-title mb-2"><%= b.listing.title %></h5>
+                <p class="card-text text-muted mb-3">
+                <%= b.checkIn.toDateString() %> → <%= b.checkOut.toDateString() %>
+                </p>
+            </div>
+
+            <div class="mt-auto pt-2">
+                <% if(b.checkIn > new Date()) { %>
+                <form action="/dashboard/booking/<%= b._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger btn-sm w-100">Cancel</button>
+                </form>
+                <% } else { %>
+                <p class="text-muted">Completed</p>
+                <% } %>
+            </div>
+
+            </div>
+        </div>
+        </div>   
+         <% }) %>
+  </div>
+<% } %>
+</div>

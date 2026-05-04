@@ -25,29 +25,53 @@
 
   <br />
 
-  <% if(currUser) { %>
+    <% if(currUser && listing.owner._id.toString() !== currUser._id.toString()) { %>
   <div class="col-6 offset-3 mb-3">
     <hr />
     <h4>Book this place</h4>
 
     <form action="/listings/<%= listing._id %>/bookings" method="POST">
-      <div class="mb-2">
+      <!-- <div class="mb-2">
         <label>Check In:</label>
-        <input type="date" name="checkIn" class="form-control" required>
+        <input 
+          type="date" 
+          name="checkIn" 
+          class="form-control" 
+          required 
+          min="<%= new Date().toISOString().split('T')[0] %>"
+        >  
       </div>
 
       <div class="mb-2">
         <label>Check Out:</label>
-        <input type="date" name="checkOut" class="form-control" required>
+        <input 
+          type="date" 
+          name="checkOut" 
+          class="form-control" 
+          required 
+          min="<%= new Date().toISOString().split('T')[0] %>"
+        > 
+      </div> -->
+      <div class="mb-2">
+        <label>Select Dates:</label>
+        <input 
+          type="text" 
+          id="bookingDate" 
+          class="form-control" 
+          placeholder="Select dates"
+          required
+        >
       </div>
 
-      <button class="btn btn-dark mt-2">Book Now</button>
+      <input type="hidden" name="checkIn" id="checkIn">
+      <input type="hidden" name="checkOut" id="checkOut">
+
+      <button class="btn btn-dark mt-2" id="bookBtn">Book Now</button>
     </form>
   </div>
 <% } %>
 
-  <% if(currUser && listing.owner._id.equals(currUser._id)) {%>
-
+<% if(currUser && listing.owner._id.toString() === currUser._id.toString()) { %>
   <div class="btns">
     <a
       href="/listings/<%= listing._id %>/edit"
@@ -175,5 +199,37 @@
     </div>
   </div>
 </div>
+<script>
+  const form = document.querySelector("form");
+  const btn = document.getElementById("bookBtn");
 
+  if (form && btn) {
+    form.addEventListener("submit", () => {
+      btn.innerText = "Booking...";
+      btn.disabled = true;
+    });
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="/js/map.js"></script>
+<script>
+  const bookedDates = <%- JSON.stringify(bookedDates || []) %>
+
+  flatpickr("#bookingDate", {
+    mode: "range",
+    minDate: "today",
+    dateFormat: "Y-m-d",
+
+    disable: bookedDates,
+
+    onChange: function(selectedDates) {
+      if (selectedDates.length === 2) {
+        document.getElementById("checkIn").value =
+          selectedDates[0].toISOString().split("T")[0];
+
+        document.getElementById("checkOut").value =
+          selectedDates[1].toISOString().split("T")[0];
+      }
+    }
+  });
+</script>

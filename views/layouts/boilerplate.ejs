@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WanderLust</title>
     <link rel="stylesheet" href="/css/style.css" />
-    <link
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
@@ -30,6 +30,7 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
+    <a href="/dashboard" class="btn btn-dark">Dashboard</a>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   </head>
   <body>
@@ -47,5 +48,13 @@
     ></script>
     <script src="/js/script.js"></script>
     <script src="/js/navbar.js"></script>
+
+    <script>
+      const alertBox = document.querySelector(".alert");
+      if (alertBox) {
+        alertBox.scrollIntoView({ behavior: "smooth" });
+      }
+    </script>
+
   </body>
 </html>

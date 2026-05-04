@@ -11,9 +11,10 @@
     aria-label="Close"
   ></button>
 </div>
-<% } %> <% if(typeof error !== "undefined" && error.length) { %>
+<% } %> 
+<% if(typeof error !== "undefined" && error.length) { %>
 <div
-  class="alert alert-danger alert-dismissible fade show col-6 offset-3"
+  class="alert alert-danger alert-dismissible fade show col-6 offset-3 mt-3 text-center fw-semibold"
   role="alert"
 >
   <%= error %>
