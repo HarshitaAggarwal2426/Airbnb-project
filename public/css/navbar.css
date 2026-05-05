@@ -2,23 +2,26 @@
   display: flex;
   align-items: center;
   border: 1px solid #ddd;
-  cursor: pointer;
   border-radius: 50px;
   background-color: #fff;
-  padding: 0.3rem 0.5rem;
-  position: relative;
+  padding: 6px 10px;
+
+  max-width: 580px;   /* balanced size */
+  width: 100%;
+  margin: 0 auto;
 }
 
+/* fields */
 .airbnb-field {
   display: flex;
   flex-direction: column;
-  padding: 0 1rem;
-  border-right: 1px solid #ddd;
-  position: relative;
-}
+  justify-content: center;
 
-.airbnb-field:hover {
-  background-color: #f8f8f8;
+  padding: 0 12px;
+  border-right: 1px solid #ddd;
+
+  flex: 1;
+  min-width: 0;
 }
 
 .airbnb-field:last-child {
@@ -26,8 +29,8 @@
 }
 
 .airbnb-field label {
-  font-size: 0.7rem;
-  font-weight: bold;
+  font-size: 10px;
+  font-weight: 600;
   color: #555;
 }
 
@@ -35,58 +38,141 @@
 .airbnb-field input {
   border: none;
   outline: none;
-  font-size: 0.9rem;
+  font-size: 13px;
   color: #333;
+  background: transparent;
 }
 
-.airbnb-field input[type="date"],
-.airbnb-field input[type="number"] {
-  cursor: pointer;
+/* prevent text breaking */
+.airbnb-field span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Dropdown */
-.dropdown {
-  position: absolute;
-  top: 3rem;
-  left: 0;
-  width: 200px;
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-  display: none;
-  z-index: 10;
-}
-
-.dropdown ul {
-  list-style: none;
-  margin: 0;
-  padding: 0.5rem 0;
-}
-
-.dropdown ul li {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.dropdown ul li:hover {
-  background-color: #f7f7f7;
-}
-
+/* button */
 .search-round-btn {
   background-color: #fe424d;
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+
+  width: 42px;
+  height: 42px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 0.5rem;
-  cursor: pointer;
+
+  flex-shrink: 0;
+  margin-left: 6px;
 }
 
 .search-round-btn:hover {
   background-color: #e03e44;
+}
+
+/* dropdown */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;   
+  left: 0;
+  margin-top: 5px;
+  width: 200px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 999;
+}
+
+/* ===== NAVBAR FIX ===== */
+.navbar-collapse {
+  background: white;
+}
+
+/* ===== COLLAPSED SEARCH (MOBILE) ===== */
+.search-collapsed {
+  display: none;
+}
+#whereField {
+  cursor: pointer;
+}
+
+#whereField span {
+  cursor: pointer;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+
+  .navbar-collapse {
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+
+  /* divider line full width */
+  .navbar-nav {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .navbar-nav:last-child {
+    border-bottom: none;
+  }
+
+  /* search container */
+  .airbnb-search-container {
+    width: 100%;
+  }
+
+  /* collapsed view */
+  .search-collapsed {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    background: #fff;
+    text-align: center;
+  }
+
+  /* hide full search initially */
+  .airbnb-search {
+    display: none;
+  }
+
+  /* expanded search */
+  .airbnb-search.active {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* fields full width */
+  .airbnb-field {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+  }
+
+  .airbnb-field input {
+    width: 100%;
+  }
+
+  /* button full width */
+  .search-round-btn {
+    width: 100%;
+    border-radius: 25px;
+  }
+
+  /* hide collapsed when expanded */
+  .search-collapsed.hide {
+    display: none;
+  }
 }
