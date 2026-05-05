@@ -72,6 +72,8 @@ I added a dashboard where:
 5. Open in browser
    http://localhost:8080
 
-
+## Live Demo
+https://airbnb-project-7cl8.onrender.com
+Deployed on Render with MongoDB Atlas as database.
 
 This project helped me understand how a real booking system works and how to handle edge cases properly.
