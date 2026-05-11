@@ -30,19 +30,6 @@ module.exports.index = async (req, res) => {
   res.render("listings/index.ejs", { allListings: listings, search,noResults, });
 };
 
-// module.exports.showListing = async (req, res) => {
-//   let { id } = req.params;
-//   const listing = await Listing.findById(id)
-//     .populate({ path: "reviews", populate: { path: "author" } })
-//     .populate("owner");
-//   if (!listing) {
-//     req.flash("error", "Listing you requested for does not exist");
-//     return res.redirect("/listings");
-//   }
-//   console.log(listing);
-//   res.render("listings/show.ejs", { listing });
-// };
-
 module.exports.showListing = async (req, res) => {
   let { id } = req.params;
 
@@ -55,10 +42,20 @@ module.exports.showListing = async (req, res) => {
     return res.redirect("/listings");
   }
 
-  // ✅ FETCH BOOKINGS
+  // FETCH BOOKINGS
   const bookings = await Booking.find({ listing: id });
+  let hasBooked = false;
 
-  // ✅ CONVERT TO DISABLED DATES
+if (req.user) {
+  const booking = await Booking.findOne({
+    listing: id,
+    user: req.user._id,
+  });
+
+  hasBooked = !!booking;
+}
+
+  //  CONVERT TO DISABLED DATES
   let bookedDates = [];
 
   bookings.forEach((b) => {
@@ -69,7 +66,7 @@ module.exports.showListing = async (req, res) => {
     }
   });
 
-  res.render("listings/show.ejs", { listing, bookedDates });
+  res.render("listings/show.ejs", { listing, bookedDates, hasBooked, });
 };
 
 module.exports.createListing = async (req, res, next) => {
